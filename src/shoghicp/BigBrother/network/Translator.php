@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace shoghicp\BigBrother\network;
 
+use pocketmine\entity\EntityIds;
 use pocketmine\network\mcpe\protocol\ActorEventPacket;
 use pocketmine\network\mcpe\protocol\AddActorPacket;
 use pocketmine\network\mcpe\protocol\AddItemActorPacket;
@@ -187,7 +188,6 @@ class Translator{
 	 * @param DesktopPlayer $player
 	 * @param Packet        $packet
 	 * @return DataPacket|array<DataPacket>|null
-	 * @throws
 	 */
 	public function interfaceToServer(DesktopPlayer $player, Packet $packet){
 		switch($packet->pid()){
@@ -293,7 +293,7 @@ class Translator{
 						$item = clone $packet->data[0];
 
 						if(!is_null(($pages = $item->getNamedTagEntry("pages")))){
-							foreach($pages as $pageNumber => $pageTags){
+							foreach($pages as $pageNumber => $pageTags){//!!!!!!
 								if($pageTags instanceof CompoundTag){
 									foreach($pageTags as $name => $tag){
 										if($tag instanceof StringTag){
@@ -322,7 +322,7 @@ class Translator{
 						if(!is_null(($pages = $item->getNamedTagEntry("pages")))){
 							foreach($pages as $pageNumber => $pageTags){
 								if($pageTags instanceof CompoundTag){
-									foreach($pageTags as $name => $tag){
+									foreach($pageTags as $name => $tag){//!!!!!!
 										if($tag instanceof StringTag){
 											if($tag->getName() === "text"){
 												$pk = new BookEditPacket();
@@ -482,9 +482,9 @@ class Translator{
 					$pk = new PlayerActionPacket();
 					$pk->entityRuntimeId = $player->getId();
 					$pk->action = PlayerActionPacket::ACTION_JUMP;
-					$pk->x = $packet->x;
-					$pk->y = $packet->y;
-					$pk->z = $packet->z;
+					$pk->x = (int) $packet->x;
+					$pk->y = (int) $packet->y;
+					$pk->z = (int) $packet->z;
 					$pk->face = 0;
 					$packets[] = $pk;
 				}
@@ -520,9 +520,9 @@ class Translator{
 					$pk = new PlayerActionPacket();
 					$pk->entityRuntimeId = $player->getId();
 					$pk->action = PlayerActionPacket::ACTION_JUMP;
-					$pk->x = $packet->x;
-					$pk->y = $packet->y;
-					$pk->z = $packet->z;
+					$pk->x = (int) $packet->x;
+					$pk->y = (int) $packet->y;
+					$pk->z = (int) $packet->z;
 					$pk->face = 0;
 					$packets[] = $pk;
 				}
@@ -618,7 +618,7 @@ class Translator{
 									ItemStackWrapper::legacy($player->getInventory()->getItemInHand()),
 									new Vector3($player->getX(), $player->getY(), $player->getZ()),
 									new Vector3($packet->x, $packet->y, $packet->z),
-									RuntimeBlockMapping::toStaticRuntimeId($player->getLevel()->getBlockIdAt((int) $frame->x,(int) $frame->y,(int) $frame->z), $player->getLevel()->getBlockDataAt((int) $frame->x,(int) $frame->y,(int) $frame->z))
+									RuntimeBlockMapping::toStaticRuntimeId($player->getLevel()->getBlockIdAt((int) $packet->x,(int) $packet->y,(int) $packet->z), $player->getLevel()->getBlockDataAt((int) $packet->x,(int) $packet->y,(int) $packet->z))
 								);
 
 								$packets[] = $pk;
@@ -710,16 +710,16 @@ class Translator{
 							$action->sourceType = NetworkInventoryAction::SOURCE_WORLD;
 							$action->sourceFlags = 0;
 							$action->inventorySlot = 0;
-							$action->oldItem = Item::get(Item::AIR, 0, 0);
-							$action->newItem = $dropItem;
+							$action->oldItem = ItemStackWrapper::legacy(Item::get(Item::AIR, 0, 0));
+							$action->newItem = ItemStackWrapper::legacy($dropItem);
 							$actions[] = $action;
 
 							$action = new NetworkInventoryAction();
 							$action->sourceType = NetworkInventoryAction::SOURCE_CONTAINER;
 							$action->windowId = ContainerIds::INVENTORY;
 							$action->inventorySlot = $player->getInventory()->getHeldItemIndex();
-							$action->oldItem = $oldItem;
-							$action->newItem = $newItem;
+							$action->oldItem = ItemStackWrapper::legacy($oldItem);
+							$action->newItem = ItemStackWrapper::legacy($newItem);
 							$actions[] = $action;
 
 							$packets = [];
@@ -743,9 +743,9 @@ class Translator{
 						$item = $player->getInventory()->getItemInHand();
 						$actionType = null;
 						if($item->getId() === Item::BOW){//Shoot Arrow
-							$actionType = InventoryTransactionPacket::RELEASE_ITEM_ACTION_RELEASE;
+							$actionType = ReleaseItemTransactionData::ACTION_RELEASE;
 						}else{//Eating
-							$actionType = InventoryTransactionPacket::RELEASE_ITEM_ACTION_CONSUME;
+							$actionType = ReleaseItemTransactionData::ACTION_CONSUME;
 						}
 
 						$pk = new InventoryTransactionPacket();
@@ -819,7 +819,7 @@ class Translator{
 				/** @var HeldItemChangePacket $packet */
 				$pk = new MobEquipmentPacket();
 				$pk->entityRuntimeId = $player->getId();
-				$pk->item = $player->getInventory()->getHotbarSlotItem($packet->selectedSlot);
+				$pk->item = ItemStackWrapper::legacy($player->getInventory()->getHotbarSlotItem($packet->selectedSlot));
 				$pk->inventorySlot = $packet->selectedSlot;
 				$pk->hotbarSlot = $packet->selectedSlot;
 
@@ -860,13 +860,16 @@ class Translator{
 				$pk->entityRuntimeId = $player->getId();
 
 				$pos = $player->bigBrother_getBreakPosition();
-				/** @var Vector3[] $pos */
+				/**
+				 * @var Vector3[] $pos
+				 * @phpstan-var array{Vector3, int} $pos
+				 */
 				if(!$pos[0]->equals(new Vector3(0, 0, 0))){
 					$packets = [$pk];
 
 					$pk = new PlayerActionPacket();
 					$pk->entityRuntimeId = $player->getId();
-					$pk->action = PlayerActionPacket::ACTION_CONTINUE_BREAK;
+					$pk->action = PlayerActionPacket::ACTION_CRACK_BREAK;
 					$pk->x = $pos[0]->x;
 					$pk->y = $pos[0]->y;
 					$pk->z = $pos[0]->z;
@@ -905,9 +908,9 @@ class Translator{
 					$packet->direction,//face
 					$player->getInventory()->getHeldItemIndex(),
 					ItemStackWrapper::legacy($player->getInventory()->getItemInHand()),
-					new Vector3($player->x, $player->y, $player->z),
+					new Vector3($player->getX(), $player->getY(), $player->getZ()),
 					new Vector3($packet->x, $packet->y, $packet->z),
-					RuntimeBlockMapping::toStaticRuntimeId($player->getLevel()->getBlockIdAt((int) $frame->x,(int) $frame->y,(int) $frame->z), $player->getLevel()->getBlockDataAt((int) $frame->x,(int) $frame->y,(int) $frame->z))
+					RuntimeBlockMapping::toStaticRuntimeId($player->getLevel()->getBlockIdAt((int) $packet->x,(int) $packet->y,(int) $packet->z), $player->getLevel()->getBlockDataAt((int) $packet->x,(int) $packet->y,(int) $packet->z))
 				);
 
 				return $pk;
@@ -950,6 +953,7 @@ class Translator{
 	 * @param DesktopPlayer $player
 	 * @param DataPacket    $packet
 	 * @return Packet|array<Packet>|null
+	 * @throws UnexpectedValueException
 	 */
 	public function serverToInterface(DesktopPlayer $player, DataPacket $packet){
 		switch($packet->pid()){
@@ -1071,7 +1075,7 @@ class Translator{
 				$pk = new EntityEquipmentPacket();
 				$pk->eid = $packet->entityRuntimeId;
 				$pk->slot = 0;//main hand
-				$pk->item = $packet->item;
+				$pk->item = $packet->item->getItemStack();
 				$packets[] = $pk;
 
 				$pk = new EntityHeadLookPacket();

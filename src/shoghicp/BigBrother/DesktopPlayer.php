@@ -101,7 +101,10 @@ class DesktopPlayer extends Player{
 	private $bigBrother_clientSetting = [];
 	/** @var array */
 	private $bigBrother_pluginMessageList = [];
-	/** @var array */
+	/**
+	 * @var array
+	 * @phpstan-var array{Vector3, int}
+	 */
 	private $bigBrother_breakPosition;
 	/** @var array */
 	private $bigBrother_bossBarData = [
@@ -237,6 +240,7 @@ class DesktopPlayer extends Player{
 
 	/**
 	 * @return array
+	 * @phpstan-return array{Vector3, int}
 	 */
 	public function bigBrother_getBreakPosition() : array{
 		return $this->bigBrother_breakPosition;

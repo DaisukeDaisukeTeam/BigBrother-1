@@ -35,9 +35,9 @@ class EntityLookPacket extends OutboundPacket{
 
 	/** @var int */
 	public $eid;
-	/** @var int */
+	/** @var float */
 	public $yaw;
-	/** @var int */
+	/** @var float */
 	public $pitch;
 	/** @var bool */
 	public $onGround;
