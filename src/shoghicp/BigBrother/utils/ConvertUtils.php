@@ -459,7 +459,7 @@ class ConvertUtils{
 	 * else convert item data opposite way.
 	 *
 	 * @param bool $isComputer
-	 * @param Item &$item
+	 * @param Item $item &
 	 */
 	public static function convertItemData(bool $isComputer, Item &$item) : void{
 		self::$timingConvertItem->startTiming();
@@ -585,8 +585,8 @@ class ConvertUtils{
 	 * else convert block data opposite way.
 	 *
 	 * @param bool $isComputer
-	 * @param int  &$blockId to convert
-	 * @param int  &$blockData to convert
+	 * @param int  $blockId to convert &
+	 * @param int  $blockData to convert &
 	 */
 	public static function convertBlockData(bool $isComputer, int &$blockId, int &$blockData) : void{
 		self::$timingConvertBlock->startTiming();
@@ -717,7 +717,7 @@ class ConvertUtils{
 	 * Why Mojang change the order of flag bits?
 	 * Why Mojang change the directions??
 	 *
-	 * @param int &$blockData
+	 * @param int $blockData &
 	 *
 	 * #blamemojang
 	 */
@@ -742,7 +742,7 @@ class ConvertUtils{
 	 * Blame Mojang!! :-@
 	 * Why Mojang change the directions??
 	 *
-	 * @param int &$blockData
+	 * @param int $blockData &
 	 *
 	 * #blamemojang
 	 */

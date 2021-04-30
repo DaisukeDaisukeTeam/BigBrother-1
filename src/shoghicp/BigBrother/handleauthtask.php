@@ -8,6 +8,7 @@ use pocketmine\Server;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\level\Level;
 use pocketmine\utils\Internet;
+use pocketmine\utils\UUID;
 
 class handleauthtask extends AsyncTask{
 

@@ -29,13 +29,14 @@ declare(strict_types=1);
 
 namespace shoghicp\BigBrother\network\protocol\Play\Client;
 
+use pocketmine\item\Item;
 use shoghicp\BigBrother\network\InboundPacket;
 
 class PluginMessagePacket extends InboundPacket{
 
 	/** @var string */
 	public $channel;
-	/** @var string[] */
+	/** @var String[]|Item[]|false[] */
 	public $data = [];
 
 	public function pid() : int{

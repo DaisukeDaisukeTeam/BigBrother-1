@@ -2,6 +2,9 @@
 namespace shoghicp\BigBrother\utils;
 
 use pocketmine\item\Item;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\NamedTag;
+
 class ComputerItem extends Item{
 	/**
 	 * @param int                $id

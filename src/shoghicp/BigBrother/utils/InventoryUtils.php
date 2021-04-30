@@ -141,7 +141,7 @@ class InventoryUtils{
 	 * @param int $inventorySlot
 	 * @param int|null $targetWindowId
 	 * @param int|null $targetInventorySlot
-	 * @return Item&
+	 * @return Item reference(&)
 	 * @throws InvalidArgumentException
 	 */
 	private function &getItemAndSlot(int $windowId, int $inventorySlot, int &$targetWindowId = null, int &$targetInventorySlot = null) : Item{

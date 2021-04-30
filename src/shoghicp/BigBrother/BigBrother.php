@@ -620,6 +620,7 @@ class BigBrother extends PluginBase implements Listener{
  * prevents access to $this/self from included file
  * @param string $file
  * @return void
+ * @phpstan-return void|mixed
  */
 function __require(string $file){
 	/** @noinspection PhpIncludeInspection */

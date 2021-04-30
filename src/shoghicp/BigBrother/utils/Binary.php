@@ -127,7 +127,7 @@ class Binary extends \pocketmine\utils\Binary{
 
 	/**
 	 * @param string $buffer
-	 * @param int    &$offset
+	 * @param int    $offset &
 	 * @return int
 	 */
 	public static function readComputerVarInt(string $buffer, int &$offset = 0) : int{
@@ -147,7 +147,7 @@ class Binary extends \pocketmine\utils\Binary{
 
 	/**
 	 * @param Session $session
-	 * @param int     &$offset
+	 * @param int     $offset &
 	 * @return int|bool
 	 */
 	public static function readVarIntSession(Session $session, int &$offset = 0){
@@ -172,7 +172,7 @@ class Binary extends \pocketmine\utils\Binary{
 
 	/**
 	 * @param resource $fp
-	 * @param int      &$offset
+	 * @param int      $offset &
 	 * @return int|bool
 	 */
 	public static function readVarIntStream($fp, int &$offset = 0){

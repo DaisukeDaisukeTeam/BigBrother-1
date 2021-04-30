@@ -656,7 +656,6 @@ class DesktopPlayer extends Player{
 	/**
 	 * @param DataPacket $packet
 	 * @override
-	 * @throws
 	 */
 	public function handleDataPacket(DataPacket $packet){
 		if($this->isConnected() === false){

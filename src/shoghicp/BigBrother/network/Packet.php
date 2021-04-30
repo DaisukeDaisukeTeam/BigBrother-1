@@ -94,7 +94,7 @@ abstract class Packet extends stdClass{
 			$damage = $this->getSignedShort();
 			$nbt = $this->get(true);
 
-			$itemNBT = ConvertUtils::convertNBTDataFromPCtoPE($nbt);
+			$itemNBT = ConvertUtils::convertNBTDataFromPCtoPE($nbt);//
 			$item = new ComputerItem($itemId, $damage, $count, $itemNBT);
 
 			ConvertUtils::convertItemData(false, $item);

@@ -59,7 +59,7 @@ use pocketmine\utils\Internet;
 
 				/**
 				 * @override
-				 * @param $server
+				 * @param Server $server
 				 */
 				public function onCompletion(Server $server){
 					$result = $this->getResult();

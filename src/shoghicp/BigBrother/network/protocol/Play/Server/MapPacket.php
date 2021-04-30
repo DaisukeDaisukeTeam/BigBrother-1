@@ -41,7 +41,10 @@ class MapPacket extends OutboundPacket{
 	public $scale;
 	/** @var bool */
 	public $trackingPosition = false;
-	/** @var resource *///TODO: We must change object type
+	/**
+	 * @var resource
+	 * @phpstan-var array|resource
+	 *///TODO: We must change object type
 	public $icons = [];
 	/** @var int */
 	public $columns = 0;
