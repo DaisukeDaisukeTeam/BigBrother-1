@@ -1,0 +1,46 @@
+parameters:
+  level: 5
+  excludes_analyse:
+    - src\fallendead\libs
+  paths:
+    - src
+  scanDirectories:
+    - \library
+  bootstrapFiles:
+    - \vendor\pocketmine\pocketmine-mp\tests\phpstan\bootstrap.php
+    - \library\bootstrap.php
+    - \vendor\autoload.php
+  ignoreErrors:
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 4 is always false\.$#'
+      count: 3
+      path: \src\shoghicp\BigBrother\network\ProtocolInterface.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 1 is always false\.$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\network\ProtocolInterface.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 4 is always false\.$#'
+      count: 2
+      path: \src\shoghicp\BigBrother\network\Translator.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 3 is always false\.$#'
+      count: 3
+      path: \src\shoghicp\BigBrother\network\Translator.php
+    -
+      message: '#^If condition is always true\.$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\network\Translator.php
+    -
+      message: '#^Unreachable statement \- code above always terminates\.$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\network\Translator.php
+    -
+      message: '#^Property pocketmine\\network\\mcpe\\protocol\\AddActorPacket\:\:\$type \(string\) does not accept int\.$#'
+      count: 46
+      path: \src\shoghicp\BigBrother\network\Translator.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 3 is always false\.$#'
+      count: 4
+      path: \src\shoghicp\BigBrother\utils\InventoryUtils.php
+

@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace shoghicp\BigBrother\utils;
 
 use InvalidArgumentException;
+use pocketmine\network\mcpe\protocol\types\inventory\ItemStackWrapper;
 use pocketmine\network\mcpe\protocol\types\inventory\NormalTransactionData;
 use pocketmine\utils\BinaryStream;
 use const pocketmine\DEBUG;
@@ -1125,8 +1126,8 @@ class InventoryUtils{
 		$action->sourceType = $sourceType;
 		$action->windowId = $windowId;
 		$action->inventorySlot = $inventorySlot;
-		$action->oldItem = $oldItem;
-		$action->newItem = $newItem;
+		$action->oldItem = ItemStackWrapper::legacy($oldItem);
+		$action->newItem = ItemStackWrapper::legacy($newItem);
 
 		return $action;
 	}

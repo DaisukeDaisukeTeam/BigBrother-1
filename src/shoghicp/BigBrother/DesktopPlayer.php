@@ -255,7 +255,7 @@ class DesktopPlayer extends Player{
 
 	/**
 	 * @param  string $bossBarData
-	 * @return string|array
+	 * @return string|array|int
 	 */
 	public function bigBrother_getBossBarData(string $bossBarData = ""){
 		if($bossBarData === ""){

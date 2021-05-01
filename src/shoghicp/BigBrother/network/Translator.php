@@ -1743,7 +1743,7 @@ class Translator{
 					return $pk;
 				}
 
-				return null;
+				return null;//Unreachable statement
 
 			case Info::LEVEL_EVENT_PACKET://TODO
 				/** @var LevelEventPacket $packet */

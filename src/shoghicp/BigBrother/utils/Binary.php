@@ -160,7 +160,7 @@ class Binary extends \pocketmine\utils\Binary{
 			$number |= ($c & 0x7f) << $shift;
 			$shift += 7;
 			++$offset;
-			if($b === false){
+			if($b === ""){//false ...?
 				return false;
 			}elseif(($c & 0x80) === 0x00){
 				break;
